@@ -21,6 +21,8 @@
     interactiveShellInit = ''
       set fish_greeting
       set fish_color_param blue
+      # macOS GUI apps don't inherit the shell PATH — ensure Nix paths are available
+      fish_add_path --prepend ~/.nix-profile/bin /nix/var/nix/profiles/default/bin
     '';
   };
 }

@@ -6,9 +6,6 @@
       window.opacity = lib.mkForce 0.85;
     };
 
-    # Font configuration
-
-    # Optional: shell to launch
-    # shell = pkgs.fish;
+    settings.terminal.shell.program = "${pkgs.fish}/bin/fish";
   };
 }
