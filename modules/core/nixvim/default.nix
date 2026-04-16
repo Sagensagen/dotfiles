@@ -5,7 +5,7 @@
   programs.nixvim = {
     enable = true;
     enableMan = true;
-    defaultEditor = true;
+    defaultEditor = false;
 
     clipboard.register = "unnamedplus"; # Use system clipboard
 
@@ -52,7 +52,7 @@
           dockerls.enable = true;
 
           # js/ts
-          tsserver.enable = true;
+          ts_ls.enable = true;
 
           # CSS
           cssls.enable = true;
@@ -70,7 +70,7 @@
           tinymist.enable = true;
 
           # Rust
-          rust-analyzer = {
+          rust_analyzer = {
             enable = true;
             installCargo = true;
             installRustc = true;
@@ -127,9 +127,11 @@
       };
 
       # Welcome screen
+      web-devicons.enable = true;
+
       alpha = {
         enable = true;
-        layout = [
+        settings.layout = [
           {
             type = "padding";
             val = 2;
@@ -202,9 +204,10 @@
       # Filetree viewer
       neo-tree = {
         enable = true;
-        closeIfLastWindow = true;
-        # TODO: This should be enabled on default, and it should work...
-        buffers.followCurrentFile.enabled = true;
+        settings = {
+          close_if_last_window = true;
+          buffers.follow_current_file.enabled = true;
+        };
       };
 
       # File search
@@ -382,7 +385,7 @@
       illuminate.enable = true;
 
       # Surround words/lines with brackets
-      surround.enable = true;
+      vim-surround.enable = true;
 
       # Preview markdown in the browser
       markdown-preview.enable = true;
@@ -390,7 +393,7 @@
 
     # Packages that are required by plugins, like formatters
     extraPackages = with pkgs; [
-      nixfmt-rfc-style
+      nixfmt
       prettierd
       stylua
       isort

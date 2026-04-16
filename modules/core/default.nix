@@ -17,6 +17,7 @@
     ./btop.nix
     ./bat.nix
     ./direnv.nix
+    ./nixvim
     ./helix.nix
   ];
 
@@ -37,7 +38,7 @@
       stateVersion = lib.mkDefault "23.11";
       sessionVariables = {
         SHELL = "fish";
-        EDITOR = "hx";
+        EDITOR = lib.mkForce "hx";
       };
     };
 
