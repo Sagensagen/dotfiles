@@ -19,6 +19,8 @@
     ./direnv.nix
     ./nixvim
     ./helix.nix
+    ./stylix.nix
+    ./vscode.nix
   ];
 
   # Custom options

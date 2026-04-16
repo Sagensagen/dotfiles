@@ -5,7 +5,6 @@
     inputs.nixvim.homeModules.nixvim
     inputs.nix-colors.homeManagerModules.default
     inputs.stylix.homeModules.stylix
-    ../modules/stylix.nix
   ];
 
   home.username = "finnolavsagen";
@@ -20,6 +19,7 @@
     kubectl
     kubernetes-helm
     kubelogin
+    kubelogin-oidc
     openfortivpn
     openshift
     opentofu

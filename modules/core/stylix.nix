@@ -9,6 +9,6 @@
     # Pass theme to stylix
     base16Scheme = config.colorScheme.palette;
 
-    image = ../assets/nix-black-4k.png;
+    image = ../../assets/nix-black-4k.png;
   };
 }

@@ -9,13 +9,13 @@
 
     clipboard.register = "unnamedplus"; # Use system clipboard
 
-    colorschemes.catppuccin.enable = true;
+    # Colorscheme is managed by stylix
 
     opts = {
       number = true; # Absolute line number on current line
       relativenumber = true; # Relative line numbers
       autoread = true; # Reload files changed outside vim
-      lazyredraw = true; # Redraw lazily
+      # lazyredraw can cause glitches with lualine/bufferline
       wrap = false; # Don't wrap lines by default
       scrolloff = 5; # Show a few lines of context around cursor
       swapfile = false; # Don't create a swapfile if closed without saving
@@ -99,7 +99,6 @@
 
       cmp = {
         enable = true;
-        autoEnableSources = true;
 
         settings = {
           sources = [
@@ -213,7 +212,6 @@
       # File search
       telescope = {
         enable = true;
-        extensions.fzy-native.enable = true;
         # NOTE: Keymaps are simply remapped to "<cmd>Telescope <action><CR>"
         keymaps = {
           "<leader>ff" = {
@@ -403,27 +401,18 @@
     ];
 
     # Autocommands
-    autoCmd =
-      let
-        mkFileTypeCmd = pattern: command: {
-          event = [
-            "BufEnter"
-            "BufWinEnter"
-          ];
-          pattern = pattern;
-          command = command;
-        };
-      in
-      [
-        # Set wrapping and spell checking for typst files
-        (mkFileTypeCmd [ "*.typ" ] "setlocal wrap linebreak spell spelllang=en_us")
-        # Set 4 spaces to default for F#
-        (mkFileTypeCmd [
-          "*.fs"
-          "*.fsi"
-          "*.fsx"
-        ] "setlocal shiftwidth=4 softtabstop=4")
-      ];
+    autoCmd = [
+      {
+        event = [ "FileType" ];
+        pattern = [ "typst" ];
+        command = "setlocal wrap linebreak spell spelllang=en_us";
+      }
+      {
+        event = [ "FileType" ];
+        pattern = [ "fsharp" ];
+        command = "setlocal shiftwidth=4 softtabstop=4";
+      }
+    ];
 
     # Keep lua config in lua file for syntax highlights and formatting
     extraConfigLua = builtins.readFile ./lua/extraConfig.lua;

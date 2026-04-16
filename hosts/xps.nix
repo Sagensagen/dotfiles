@@ -5,8 +5,6 @@
     inputs.nixvim.homeModules.nixvim
     inputs.nix-colors.homeManagerModules.default
     inputs.stylix.homeModules.stylix
-    ../modules/stylix.nix
-    ../modules/vscode.nix
     ../modules/desktop/sway
   ];
 
