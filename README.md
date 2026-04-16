@@ -1,60 +1,67 @@
-# My Personal Home Configuration using Nix home-manager
+# Dotfiles
 
-This is my personal home configuration using home-manager as a standalone util. Its structure is an attempt at a modular and flexible design and is intended to be used both standalone on non-nixos systems and along with NixOS system configs like [my NixOS config](https://github.com/otytlandsvik/nixos-config) (also as a standalone non-root tool).
-The structure is inspired by [EmergentMind's config](https://github.com/EmergentMind/nix-config) as well as a heap of others. It currently only configures one user and host, but is structured such that more can be added in the future with varying configs as needed.
+Home Manager configuration managed with Nix flakes. Modular structure with shared core modules and per-host package lists.
 
-**This config**:
+## Structure
 
-- Uses flakes
-- Uses the _unstable_ branch
-- Is meant to be used both on NixOS with a separate system config, and on non-nixos systems
+```
+flake.nix          # Entry point — defines hosts
+user.nix           # Your identity (name, email, signing key)
+hosts/
+  <host>.nix       # Per-machine config + packages
+modules/
+  core/            # Shared across all hosts (shell, editor, git, etc.)
+  stylix.nix       # Theming
+  vscode.nix       # VSCode + extensions
+  desktop/sway/    # Sway window manager stack
+```
 
-## Bootstrapping
+## Fork and personalize
 
-As a reminder to myself and as a resource to anyone seeking inspiration, here is the bootstrapping process:
+1. Fork this repo
+2. Edit `user.nix` with your name, email, and SSH signing key
+3. Add or modify a host file in `hosts/` for your machine
+4. Register the host in `flake.nix` with the correct `system` architecture
 
-1. Move to the location you want your config to live (I put mine in `~/dotfiles`)
-2. Clone this repository:
-   ```sh
-   $ git clone git@github.com:otytlandsvik/dotfiles.git
-   ```
-3. Make your desired modifications to `home.nix` (opt in or out of any optional modules, or change the entire config if you like)
-4. Remember to change the output target in `flake.nix` to reflect your username and point to the correct nix file
-5. Install [the home-manager standalone tool](https://nix-community.github.io/home-manager/) using Nix (the package manager):
+## Initial setup
 
-   ```sh
-   $ nix-shell -p home-manager
-   ```
+Install Nix, then bootstrap with home-manager in a temporary shell:
 
-   Or, on NixOS you can also make it available as a system package:
+```sh
+git clone <your-fork> ~/dotfiles
+cd ~/dotfiles
+nix-shell -p home-manager
+home-manager switch --flake .#<host> -b backup
+```
 
-   ```nix
-   environment.systemPackages = [
-     pkgs.home-manager
-   ];
-   ```
+After the first switch, home-manager manages itself — no need for `nix-shell` again.
 
-   Or, on NixOS you can also make this package explicitly available to your user:
+## Rebuild / switch
 
-   ```nix
-   users.users."username" = {
+After making changes, apply them:
 
-     ...
+```sh
+home-manager switch --flake .#<host>
+```
 
-     packages = [ pkgs.home-manager ];
-   };
-   ```
+Use `build` instead of `switch` to test without activating:
 
-   **After bootstrapping, home-manager will install and manage itself.** That's why it's sufficient to run it in a nix-shell.
+```sh
+home-manager build --flake .#<host>
+```
 
-6. Build the config using home-manager (as an example, if `username` was added as a flake output):
-   ```sh
-   $ home-manager switch --flake .#username
-   ```
+## Update inputs
 
-> [!NOTE]
-> The `.` here evaluates to the cwd. It must be a path to the directory containing `flake.nix`
+Update all flake inputs (nixpkgs, home-manager, etc.):
 
-#### Now your dotfiles are managed by home-manager!
+```sh
+nix flake update
+```
 
-Test it by running one of the programs configured, like `nvim`.
+Update a single input:
+
+```sh
+nix flake update nixpkgs
+```
+
+Then rebuild to apply the updates.

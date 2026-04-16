@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   programs.alacritty = {
     enable = true;
     settings = {
-      window.opacity = 0.85;      
+      window.opacity = lib.mkForce 0.85;
     };
 
     # Font configuration

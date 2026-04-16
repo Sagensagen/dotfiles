@@ -14,7 +14,7 @@
     };
 
     shellAbbrs = {
-      hms = "home-manager switch --flake ~/dotfiles/#ole";
+      hms = "home-manager switch --flake ~/dotfiles";
       kcd = "kubectl config set-context --current --namespace";
     };
 

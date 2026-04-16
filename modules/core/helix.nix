@@ -1,10 +1,10 @@
-{ pkgs, inputs, ... }:
+{ pkgs, lib, inputs, ... }:
 {
   programs.helix = with pkgs; {
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = "onedark";
+      theme = lib.mkForce "onedark";
       editor = {
         color-modes = true;
         cursorline = true;

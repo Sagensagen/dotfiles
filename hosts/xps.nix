@@ -1,32 +1,37 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [
-    ################ Required ################
-    common/core
-
-    ################ Extras passed from flake ################
-    inputs.nixvim.homeManagerModules.nixvim
+    ../modules/core
+    inputs.nixvim.homeModules.nixvim
     inputs.nix-colors.homeManagerModules.default
-    inputs.stylix.homeManagerModules.stylix
-
-    ################ Optionals ################
-    common/optional/wms/sway
-    common/optional/bambu.nix
-    common/optional/cursor.nix
-    common/optional/discord.nix
-    common/optional/evince.nix
-    common/optional/ferdium.nix
-    common/optional/k9s.nix
-    common/optional/kubernetes.nix
-    common/optional/obsidian.nix
-    common/optional/openfortivpn.nix
-    common/optional/rider.nix
-    common/optional/spotify.nix
-    common/optional/stylix.nix
-    common/optional/vscode.nix
-    common/optional/yazi.nix
+    inputs.stylix.homeModules.stylix
+    ../modules/stylix.nix
+    ../modules/vscode.nix
+    ../modules/desktop/sway
   ];
 
-  # Custom options
+  home.username = "finnolavsagen";
+  home.homeDirectory = "/home/finnolavsagen";
   laptop.enable = true;
+
+  # CLI + GUI packages — add/remove as needed
+  home.packages = with pkgs; [
+    # CLI
+    docker
+    k9s
+    kubectl
+    kubernetes-helm
+    openfortivpn
+    postgresql
+
+    # GUI (NixOS only — on macOS install these manually)
+    bambu-studio
+    discord
+    evince
+    ferdium
+    jetbrains.rider
+    obsidian
+    spotify
+    yazi
+  ];
 }

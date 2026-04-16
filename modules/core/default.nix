@@ -6,18 +6,16 @@
 }:
 {
   imports = [
-    # Packages with custom configs
+    ../../user.nix
     ./alacritty.nix
     ./git.nix
-    ./lazygit.nix # Terminal-based git GUI
-    # ./nixvim # neovim configured through nix
+    ./lazygit.nix
     ./fonts.nix
-    ./fish.nix # Shell
-    ./starship # Shell prompt
-    ./zoxide.nix # cd replacement
-    ./eza.nix # ls replacement
-    ./btop.nix # fancy htop
-    ./bat.nix # cat replacement
+    ./fish.nix
+    ./starship
+    ./eza.nix
+    ./btop.nix
+    ./bat.nix
     ./direnv.nix
     ./helix.nix
   ];
@@ -36,8 +34,6 @@
 
     # Home manager configuration
     home = {
-      username = lib.mkDefault "finnolavsagen";
-      homeDirectory = lib.mkDefault "/Users/${config.home.username}";
       stateVersion = lib.mkDefault "23.11";
       sessionVariables = {
         SHELL = "fish";
@@ -52,11 +48,12 @@
     home.packages = builtins.attrValues {
       inherit (pkgs)
         fsautocomplete
-        fzf # Fuzzy find
-        delta # Diff pager for git
-        ripgrep # grep goodness
-        fastfetch # System info
-        fd # find replacement
+        fzf
+        jq
+        delta
+        ripgrep
+        fastfetch
+        fd
         zip
         unzip
         xsel

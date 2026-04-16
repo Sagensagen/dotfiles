@@ -1,33 +1,34 @@
-{ inputs,pkgs,config, ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [
-    ################ Required ################
-    common/core
-
-    ################ Extras passed from flake ################
-    inputs.nixvim.homeManagerModules.nixvim
+    ../modules/core
+    inputs.nixvim.homeModules.nixvim
     inputs.nix-colors.homeManagerModules.default
-    inputs.stylix.homeManagerModules.stylix
-
-    ################ Optionals ################
-    common/optional/openfortivpn.nix
-    common/optional/kubernetes.nix
-    common/optional/k9s.nix
-    common/optional/talosctl.nix
-    common/optional/azure-cli.nix
-    common/optional/terraform.nix
-    common/optional/kubelogin.nix
-    common/optional/opentofu.nix
-    common/optional/tilt.nix
-    common/optional/yq.nix
-    common/optional/pandoc.nix
-    common/optional/psql.nix
-    common/optional/rclone.nix
-    common/optional/div.nix
-    common/optional/claude.nix
-    common/optional/openshift.nix
+    inputs.stylix.homeModules.stylix
+    ../modules/stylix.nix
   ];
 
-  # Custom options
+  home.username = "finnolavsagen";
+  home.homeDirectory = "/Users/finnolavsagen";
   laptop.enable = true;
+
+  # CLI packages — add/remove as needed
+  home.packages = with pkgs; [
+    claude-code
+    docker
+    k9s
+    kubectl
+    kubernetes-helm
+    kubelogin
+    openfortivpn
+    openshift
+    opentofu
+    pandoc
+    postgresql
+    rclone
+    talosctl
+    terraform
+    tilt
+    yq-go
+  ];
 }
