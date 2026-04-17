@@ -37,5 +37,9 @@
       system = "x86_64-linux";
       hostModule = ./hosts/xps.nix;
     };
+    homeConfigurations."thinkcenter" = mkHost {
+    system = "x86_64-linux";
+    hostModule = ./hosts/thinkcenter.nix;
   };
+ };
 }
