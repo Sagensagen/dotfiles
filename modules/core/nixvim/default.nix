@@ -168,7 +168,11 @@
                       "n"
                       shortcut
                       cmd
-                      { }
+                      {
+                        noremap = true;
+                        silent = true;
+                        nowait = true;
+                      }
                     ];
                     position = "center";
                     cursor = 2;
