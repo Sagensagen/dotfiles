@@ -46,7 +46,14 @@
           nixd.enable = true;
 
           # F#
-          fsautocomplete.enable = true;
+          fsautocomplete = {
+            enable = true;
+            settings = {
+              FSharp = {
+                ExternalAutocomplete = true;
+              };
+            };
+          };
 
           # Dockerfile
           dockerls.enable = true;
